@@ -15,5 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MarvelApp"
 include(":app")
-include(":presentation")
 include(":domain")
