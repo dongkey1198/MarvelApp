@@ -51,6 +51,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation(project(":domain"))
+    implementation(project(":data"))
 }
 
 // Allow references to generated code
