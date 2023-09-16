@@ -20,7 +20,7 @@
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
         android:maxLines="1"
-        android:hint="마블 영웅 이름을 입력하시오."
+        android:hint="@string/hint_search"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/imageViewIcon"
         app:layout_constraintEnd_toEndOf="parent"
