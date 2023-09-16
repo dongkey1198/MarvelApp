@@ -2,6 +2,7 @@ package com.example.marvelapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.marvelapp.R
 import com.example.marvelapp.databinding.ActivityMainBinding
 import com.example.marvelapp.view.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -31,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         binding.tabLayout.apply {
             TabLayoutMediator(this, binding.viewPager) { tab, position ->
                 tab.text = when (position) {
-                    0 -> "Search"
-                    else -> "Favorite"
+                    0 -> getString(R.string.label_search)
+                    else ->  getString(R.string.label_favorite)
                 }
             }.attach()
         }
