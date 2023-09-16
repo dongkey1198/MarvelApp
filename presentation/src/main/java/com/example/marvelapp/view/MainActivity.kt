@@ -18,24 +18,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initViewPagerAdapter()
+        initViewPager()
         initTabLayout()
     }
 
-    private fun initViewPagerAdapter() {
-        binding.viewPager.apply {
-            adapter = viewPagerAdapter
-        }
+    private fun initViewPager() {
+        binding.viewPager.adapter = viewPagerAdapter
     }
 
     private fun initTabLayout() {
-        binding.tabLayout.apply {
-            TabLayoutMediator(this, binding.viewPager) { tab, position ->
-                tab.text = when (position) {
-                    0 -> getString(R.string.label_search)
-                    else ->  getString(R.string.label_favorite)
-                }
-            }.attach()
-        }
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.label_search)
+                else ->  getString(R.string.label_favorite)
+            }
+        }.attach()
     }
 }

@@ -10,20 +10,33 @@
         android:id="@+id/imageViewIcon"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/editTextSearch"
-        app:layout_constraintTop_toTopOf="@id/editTextSearch"
         app:layout_constraintBottom_toBottomOf="@id/editTextSearch"
-        app:srcCompat="@drawable/ic_search"/>
+        app:layout_constraintEnd_toStartOf="@id/editTextSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editTextSearch"
+        app:srcCompat="@drawable/ic_search" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
-        android:maxLines="1"
-        android:hint="@string/hint_search"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+        android:hint="@string/hint_search"
+        android:inputType="text"
+        android:maxLines="1"
+        android:imeOptions=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMarvelCharacter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextSearch"
+        tools:listitem="@layout/item_viewholder_character" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
