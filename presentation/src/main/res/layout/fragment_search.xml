@@ -6,13 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".view.search.SearchFragment">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageViewIcon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search Fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/editTextSearch"
+        app:layout_constraintTop_toTopOf="@id/editTextSearch"
+        app:layout_constraintBottom_toBottomOf="@id/editTextSearch"
+        app:srcCompat="@drawable/ic_search"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="0dp"
+        android:maxLines="1"
+        android:hint="마블 영웅 이름을 입력하시오."
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/imageViewIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
