@@ -14,10 +14,10 @@ data class MarvelCharacterDto(
         @SerializedName("limit") val limit: Int,
         @SerializedName("total") val total: Int,
         @SerializedName("count") val count: Int,
-        @SerializedName("results") val results: List<Results>
+        @SerializedName("results") val results: List<Result>
     )
 
-    data class Results(
+    data class Result(
         @SerializedName("id") val id: Int,
         @SerializedName("name") val name: String,
         @SerializedName("description") val description: String,
