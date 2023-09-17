@@ -7,12 +7,14 @@ import com.example.domain.model.SearchResult
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +23,9 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _searchQueryFlow = MutableStateFlow("")
+
+    private val _progressStateFlow = MutableStateFlow(false)
+    val progressStateFlow get() = _progressStateFlow.asStateFlow()
 
     init {
         observeSearchQuery()
@@ -43,7 +48,7 @@ class SearchViewModel @Inject constructor(
                     }
 
                     is SearchResult.Loading -> {
-                        // loading
+                        _progressStateFlow.update { !_progressStateFlow.value }
                     }
 
                     is SearchResult.Error -> {
