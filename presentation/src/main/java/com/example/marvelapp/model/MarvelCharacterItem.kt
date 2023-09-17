@@ -2,7 +2,7 @@ package com.example.marvelapp.model
 
 import com.example.domain.model.MarvelCharacter
 
-data class MarvelCharacterItem (
+data class MarvelCharacterItem(
     val id: Int,
     val name: String,
     val description: String,
