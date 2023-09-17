@@ -11,11 +11,12 @@ class MarvelRemoteDataSourceImpl @Inject constructor(
 ) : MarvelRemoteDataSource {
 
     override suspend fun fetchCharacters(
-        nameStartsWith: String
-    ): List<MarvelCharacter> = withContext(Dispatchers.IO) {
-        marvelApiService.fetchCharacters(nameStartsWith = nameStartsWith)
-            .data
-            .results
-            .map { result -> result.toDomain() }
+        nameStartsWith: String,
+        offset: Int
+    ): Pair<List<MarvelCharacter>, Int> = withContext(Dispatchers.IO) {
+        val result = marvelApiService.fetchCharacters(nameStartsWith = nameStartsWith, offset = offset)
+        val marvelCharacters = result.data.results.map { it.toDomain() }
+        val total = result.data.total
+        Pair(marvelCharacters, total)
     }
 }

@@ -10,6 +10,7 @@ class MarvelRepositoryImpl @Inject constructor(
 ) : MarvelRepository {
 
     override suspend fun fetchCharacters(
-        nameStartsWith: String
-    ): List<MarvelCharacter> = marvelRemoteDataSource.fetchCharacters(nameStartsWith)
+        nameStartsWith: String,
+        offset: Int
+    ): Pair<List<MarvelCharacter>, Int> = marvelRemoteDataSource.fetchCharacters(nameStartsWith, offset)
 }
