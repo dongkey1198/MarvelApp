@@ -13,11 +13,14 @@ class SearchMarvelCharactersUseCase @Inject constructor(
 
     operator fun invoke(keyword: String): Flow<SearchResult<List<MarvelCharacter>>> = flow {
         runCatching {
+            emit(SearchResult.Loading())
             marvelRepository.fetchCharacters(keyword)
         }.onSuccess { result ->
             emit(SearchResult.Success(result))
+            emit(SearchResult.Loading())
         }.onFailure { exception ->
             emit(SearchResult.Error("${exception.message}"))
+            emit(SearchResult.Loading())
         }
     }
 }
