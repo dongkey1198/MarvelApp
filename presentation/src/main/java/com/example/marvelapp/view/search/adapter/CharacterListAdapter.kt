@@ -5,9 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.marvelapp.R
 import com.example.marvelapp.databinding.ItemViewholderCharacterBinding
+import com.example.marvelapp.model.MarvelCharacterItem
 
-class CharacterListAdapter : ListAdapter<String, CharacterListAdapter.ViewHolder>(diffUtil) {
+class CharacterListAdapter : ListAdapter<MarvelCharacterItem, CharacterListAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         ItemViewholderCharacterBinding.inflate(
@@ -25,20 +28,44 @@ class CharacterListAdapter : ListAdapter<String, CharacterListAdapter.ViewHolder
         private val binding: ItemViewholderCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: String) {
+        fun bind(item: MarvelCharacterItem) {
+            initImage(item.thumbnail)
+            initName(item.name)
+            initDescription(item.description)
+        }
 
+        private fun initImage(thumbnail: String) {
+            Glide.with(binding.root.context)
+                .load(thumbnail)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(binding.imageViewCharacterImage)
+        }
+
+        private fun initName(name: String) {
+            binding.textViewCharacterName.text = name
+        }
+
+        private fun initDescription(description: String) {
+            binding.textViewCharacterDescription.text = description
         }
     }
 
     companion object {
-        private val diffUtil = object : DiffUtil.ItemCallback<String>() {
+        private val diffUtil = object : DiffUtil.ItemCallback<MarvelCharacterItem>() {
 
-            override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+            override fun areItemsTheSame(
+                oldItem: MarvelCharacterItem,
+                newItem: MarvelCharacterItem
+            ): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-                return oldItem == newItem
+            override fun areContentsTheSame(
+                oldItem: MarvelCharacterItem,
+                newItem: MarvelCharacterItem
+            ): Boolean {
+                return oldItem.id == newItem.id
             }
         }
     }
