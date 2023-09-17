@@ -1,7 +1,7 @@
 package com.example.domain.usecase
 
 import com.example.domain.model.MarvelCharacter
-import com.example.domain.model.SearchResult
+import com.example.domain.model.RequestResult
 import com.example.domain.repository.MarvelRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,16 +11,16 @@ class SearchMarvelCharactersUseCase @Inject constructor(
     private val marvelRepository: MarvelRepository
 ) {
 
-    operator fun invoke(keyword: String): Flow<SearchResult<List<MarvelCharacter>>> = flow {
+    operator fun invoke(keyword: String): Flow<RequestResult<List<MarvelCharacter>>> = flow {
         runCatching {
-            emit(SearchResult.Loading())
+            emit(RequestResult.Loading())
             marvelRepository.fetchCharacters(keyword)
         }.onSuccess { result ->
-            emit(SearchResult.Success(result))
-            emit(SearchResult.Loading())
+            emit(RequestResult.Success(result))
+            emit(RequestResult.Loading())
         }.onFailure { exception ->
-            emit(SearchResult.Error("${exception.message}"))
-            emit(SearchResult.Loading())
+            emit(RequestResult.Error("${exception.message}"))
+            emit(RequestResult.Loading())
         }
     }
 }

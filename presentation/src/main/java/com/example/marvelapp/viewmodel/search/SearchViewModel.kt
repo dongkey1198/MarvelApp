@@ -3,7 +3,7 @@ package com.example.marvelapp.viewmodel.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.SearchResult
+import com.example.domain.model.RequestResult
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.model.toPresentation
@@ -48,16 +48,16 @@ class SearchViewModel @Inject constructor(
             .flatMapLatest { query -> searchMarvelCharactersUseCase(query) }
             .onEach { result ->
                 when (result) {
-                    is SearchResult.Success -> {
+                    is RequestResult.Success -> {
                         val marvelCharacterItems = result.data?.map { it.toPresentation() } ?: emptyList()
                         _marvelCharacterItems.update { marvelCharacterItems }
                     }
 
-                    is SearchResult.Loading -> {
+                    is RequestResult.Loading -> {
                         _progressStateFlow.update { !_progressStateFlow.value }
                     }
 
-                    is SearchResult.Error -> {
+                    is RequestResult.Error -> {
                         Log.d("aaa", "${result.message}")
                     }
                 }
