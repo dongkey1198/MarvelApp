@@ -9,6 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.databinding.FragmentSearchBinding
 import com.example.marvelapp.utils.Utils.setVisibility
 import com.example.marvelapp.view.search.adapter.CharacterListAdapter
@@ -53,6 +54,17 @@ class SearchFragment : Fragment() {
             adapter = characterListAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
             itemAnimator = null
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = (layoutManager as GridLayoutManager)
+                    val lastItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                    if (lastItemPosition == layoutManager.itemCount - 1) {
+                        val query = binding.editTextSearch.text?.toString() ?: ""
+                        viewModel.performSearch(query)
+                    }
+                }
+            })
         }
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.marvelCharacterItems.collect { items ->

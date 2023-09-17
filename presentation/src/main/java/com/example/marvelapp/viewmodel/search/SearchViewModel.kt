@@ -8,15 +8,16 @@ import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,12 +25,12 @@ class SearchViewModel @Inject constructor(
     private val searchMarvelCharactersUseCase: SearchMarvelCharactersUseCase
 ) : ViewModel() {
 
-    private val _searchQueryFlow = MutableStateFlow("")
+    private val _searchQueryFlow = MutableSharedFlow<String>(replay = 0)
 
-    private val _marvelCharacterItems: MutableStateFlow<List<MarvelCharacterItem>> = MutableStateFlow(emptyList())
+    private val _marvelCharacterItems = MutableStateFlow<List<MarvelCharacterItem>>(emptyList())
     val marvelCharacterItems get() = _marvelCharacterItems.asStateFlow()
 
-    private val _progressStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _progressStateFlow = MutableStateFlow<Boolean>(false)
     val progressStateFlow get() = _progressStateFlow.asStateFlow()
 
     init {
@@ -37,15 +38,16 @@ class SearchViewModel @Inject constructor(
     }
 
     fun performSearch(query: String) {
-        _searchQueryFlow.update { query }
+        viewModelScope.launch(Dispatchers.Default) {
+            _searchQueryFlow.emit(query)
+        }
     }
 
     private fun observeSearchQuery() {
         _searchQueryFlow
             .debounce(SEARCH_TIMEOUT)
-            .distinctUntilChanged()
-            .filter { query -> query.length >= 2 }
-            .flatMapLatest { query -> searchMarvelCharactersUseCase(query) }
+            .flatMapLatest { query ->
+                searchMarvelCharactersUseCase(query) }
             .onEach { result ->
                 when (result) {
                     is RequestResult.Success -> {
