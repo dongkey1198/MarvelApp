@@ -12,6 +12,7 @@ interface MarvelApiService {
         @Query("apikey") apikey: String = ApiConstants.API_KEY,
         @Query("ts") timeStamp: String = ApiConstants.timeStamp,
         @Query("hash") hash: String = ApiConstants.hash(),
+        @Query("limit") limit: Int = ApiConstants.limit,
         @Query("nameStartsWith") nameStartsWith: String
     ): MarvelCharacterDto
 }

@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViewPager()
         initTabLayout()
-
     }
 
     private fun initViewPager() {

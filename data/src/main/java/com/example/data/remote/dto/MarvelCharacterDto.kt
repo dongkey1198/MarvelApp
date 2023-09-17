@@ -28,9 +28,19 @@ data class MarvelCharacterDto(
                 id = id,
                 name = name,
                 description = description,
-                thumbnail = thumbnail.path
+                thumbnail = convertHttpToHttps("${thumbnail.path}/portrait_xlarge.${thumbnail.extension}")
             )
+
+        private fun convertHttpToHttps(url: String): String =
+            if (url.startsWith("http://")) {
+                "https://" + url.substring(7)
+            } else {
+                url
+            }
     }
 
-    data class Thumbnail(@SerializedName("path") val path: String)
+    data class Thumbnail(
+        @SerializedName("path") val path: String,
+        @SerializedName("extension") val extension: String
+    )
 }

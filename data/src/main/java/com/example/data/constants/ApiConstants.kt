@@ -7,9 +7,10 @@ import java.sql.Timestamp
 
 class ApiConstants {
     companion object {
-        const val BASE_URL = "https://gateway.marvel.com"
-        const val API_KEY = BuildConfig.API_KEY
         private const val PRIVATE_KEY = BuildConfig.PRIVATE_KEY
+        const val API_KEY = BuildConfig.API_KEY
+        const val BASE_URL = "https://gateway.marvel.com"
+        const val limit = 10
         val timeStamp = "${Timestamp(System.currentTimeMillis()).time}"
 
         fun hash(): String {
