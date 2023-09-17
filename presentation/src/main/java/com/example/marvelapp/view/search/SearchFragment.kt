@@ -52,6 +52,12 @@ class SearchFragment : Fragment() {
         binding.recyclerViewMarvelCharacter.apply {
             adapter = characterListAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
+            itemAnimator = null
+        }
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.marvelCharacterItems.collect { items ->
+                characterListAdapter.submitList(items)
+            }
         }
     }
 

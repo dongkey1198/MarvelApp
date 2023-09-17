@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.SearchResult
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
+import com.example.marvelapp.model.MarvelCharacterItem
+import com.example.marvelapp.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +26,10 @@ class SearchViewModel @Inject constructor(
 
     private val _searchQueryFlow = MutableStateFlow("")
 
-    private val _progressStateFlow = MutableStateFlow(false)
+    private val _marvelCharacterItems: MutableStateFlow<List<MarvelCharacterItem>> = MutableStateFlow(emptyList())
+    val marvelCharacterItems get() = _marvelCharacterItems.asStateFlow()
+
+    private val _progressStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val progressStateFlow get() = _progressStateFlow.asStateFlow()
 
     init {
@@ -32,7 +37,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun performSearch(query: String) {
-        _searchQueryFlow.value = query
+        _searchQueryFlow.update { query }
     }
 
     private fun observeSearchQuery() {
@@ -44,7 +49,8 @@ class SearchViewModel @Inject constructor(
             .onEach { result ->
                 when (result) {
                     is SearchResult.Success -> {
-                        Log.d("aaa", "${result.data}")
+                        val marvelCharacterItems = result.data?.map { it.toPresentation() } ?: emptyList()
+                        _marvelCharacterItems.update { marvelCharacterItems }
                     }
 
                     is SearchResult.Loading -> {
