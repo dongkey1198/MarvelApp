@@ -45,6 +45,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    kapt {
+        correctErrorTypes = true
+        useBuildCache = true
+    }
 }
 
 dependencies {
@@ -60,6 +64,12 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.46")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    // Room
+    implementation("androidx.room:room-runtime:2.6.0-alpha01")
+    implementation("androidx.room:room-ktx:2.6.0-alpha01")
+    annotationProcessor("androidx.room:room-compiler:2.6.0-alpha01")
+    kapt("androidx.room:room-compiler:2.6.0-alpha01")
+    implementation("androidx.room:room-ktx:2.6.0-alpha01")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
