@@ -3,7 +3,7 @@ package com.example.marvelapp.viewmodel.search
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.RequestResult
+import com.example.domain.model.MarvelCharacter
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.model.toPresentation
@@ -12,8 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -47,24 +49,32 @@ class SearchViewModel @Inject constructor(
         _searchQueryFlow
             .debounce(SEARCH_TIMEOUT)
             .flatMapLatest { query ->
-                searchMarvelCharactersUseCase(query) }
-            .onEach { result ->
-                when (result) {
-                    is RequestResult.Success -> {
-                        val marvelCharacterItems = result.data?.map { it.toPresentation() } ?: emptyList()
-                        _marvelCharacterItems.update { marvelCharacterItems }
-                    }
-
-                    is RequestResult.Loading -> {
-                        _progressStateFlow.update { !_progressStateFlow.value }
-                    }
-
-                    is RequestResult.Error -> {
-                        Log.d("aaa", "${result.message}")
-                    }
+                updateProgressingState(true)
+                if (query.length >= 2) {
+                    searchMarvelCharactersUseCase(query)
+                } else {
+                    flowOf(emptyList())
                 }
             }
+            .onEach { result ->
+                updateProgressingState(false)
+                _marvelCharacterItems.update { result.map { it.toPresentation() } }
+                updateMarvelCharacterState(result)
+            }
+            .catch {
+                updateProgressingState(false)
+                Log.d("exception", "${it.message}")
+            }
             .launchIn(viewModelScope)
+    }
+
+
+    private fun updateMarvelCharacterState(marvelCharacters: List<MarvelCharacter>) {
+        _marvelCharacterItems.update { marvelCharacters.map { it.toPresentation() } }
+    }
+
+    private fun updateProgressingState(isProgressing: Boolean) {
+        _progressStateFlow.update { isProgressing }
     }
 
     companion object {
