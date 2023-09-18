@@ -1,13 +1,9 @@
-package com.example.domain.repository
+package com.example.data.local.datasource
 
 import com.example.domain.model.MarvelCharacter
 import kotlinx.coroutines.flow.Flow
 
-interface MarvelRepository {
-
-    suspend fun fetchCharacters(nameStartsWith: String, offset: Int): Pair<List<MarvelCharacter>, Int>
-
+interface MarvelLocalDataSource {
     suspend fun saveMarvelCharacter(marvelCharacter: MarvelCharacter)
-
     fun getMarvelCharacters(): Flow<List<MarvelCharacter>>
 }

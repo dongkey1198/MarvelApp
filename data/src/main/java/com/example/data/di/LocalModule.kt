@@ -2,9 +2,10 @@ package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.data.local.dao.FavoriteCharacterDao
+import com.example.data.local.dao.MarvelCharacterDao
 import com.example.data.local.database.UserDatabase
-import com.example.data.local.datasource.FavoriteLocalDatasourceImpl
+import com.example.data.local.datasource.MarvelLocalDataSource
+import com.example.data.local.datasource.MarvelLocalDatasourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,17 +27,15 @@ object LocalModule {
         UserDatabase.USER_DATABASE_NAME
     ).build()
 
+    @Provides
+    @Singleton
+    fun provideMarvelCharacterDao(
+        userDatabase: UserDatabase
+    ): MarvelCharacterDao = userDatabase.getMarvelCharacterDao()
 
     @Provides
     @Singleton
-    fun provideFavoriteDao(
-        database: UserDatabase
-    ): FavoriteCharacterDao = database.getFavoriteCharacterDao()
-
-
-    @Provides
-    @Singleton
-    fun provideFavoriteLocalDataSource(
-        favoriteCharacterDao: FavoriteCharacterDao
-    ) = FavoriteLocalDatasourceImpl(favoriteCharacterDao)
+    fun provideMarvelLocalDataSource(
+        marvelCharacterDao: MarvelCharacterDao
+    ): MarvelLocalDataSource = MarvelLocalDatasourceImpl(marvelCharacterDao)
 }

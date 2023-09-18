@@ -3,12 +3,12 @@ package com.example.data.local.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.data.local.dao.FavoriteCharacterDao
-import com.example.data.local.dto.FavoriteCharacterDto
+import com.example.data.local.dao.MarvelCharacterDao
+import com.example.data.local.dto.MarvelCharacterDto
 
 @Database(
     entities = [
-        FavoriteCharacterDto::class
+        MarvelCharacterDto::class,
     ],
     version = 1,
     exportSchema = false
@@ -16,7 +16,7 @@ import com.example.data.local.dto.FavoriteCharacterDto
 @TypeConverters(RoomTypeConverter::class)
 abstract class UserDatabase: RoomDatabase() {
 
-    internal abstract fun getFavoriteCharacterDao(): FavoriteCharacterDao
+    abstract fun getMarvelCharacterDao(): MarvelCharacterDao
 
     companion object {
         const val USER_DATABASE_NAME = "UserDatabase.db"
