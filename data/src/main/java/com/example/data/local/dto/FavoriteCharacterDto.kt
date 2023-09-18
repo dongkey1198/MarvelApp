@@ -23,3 +23,12 @@ data class FavoriteCharacterDto(
         savedDate = savedDate
     )
 }
+
+fun FavoriteCharacter.toDto(): FavoriteCharacterDto =
+    FavoriteCharacterDto(
+        id = id,
+        name = name,
+        description = description,
+        thumbnail = thumbnail,
+        savedDate = Date()
+    )

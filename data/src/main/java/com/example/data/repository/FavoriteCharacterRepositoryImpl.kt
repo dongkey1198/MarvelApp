@@ -9,6 +9,9 @@ import javax.inject.Inject
 class FavoriteCharacterRepositoryImpl @Inject constructor(
     private val favoriteCharacterLocalDataSource: FavoriteLocalDataSource
 ): FavoriteCharacterRepository {
+    override suspend fun saveFavoriteCharacter(favoriteCharacter: FavoriteCharacter) {
+        favoriteCharacterLocalDataSource.saveFavoriteCharacter(favoriteCharacter)
+    }
 
     override fun getFavoriteCharacters(): Flow<FavoriteCharacter> =
         favoriteCharacterLocalDataSource.getFavoriteCharacters()
