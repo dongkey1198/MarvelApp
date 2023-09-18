@@ -4,8 +4,6 @@ import com.example.data.constants.ApiConstants
 import com.example.data.remote.datasource.MarvelRemoteDataSource
 import com.example.data.remote.datasource.MarvelRemoteDataSourceImpl
 import com.example.data.remote.service.MarvelApiService
-import com.example.data.repository.MarvelRepositoryImpl
-import com.example.domain.repository.MarvelRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,10 +31,4 @@ object RemoteModule {
     fun provideMarvelRemoteDataSource(
         marvelApiService: MarvelApiService
     ): MarvelRemoteDataSource = MarvelRemoteDataSourceImpl(marvelApiService)
-
-    @Provides
-    @Singleton
-    fun provideMarvelRepository(
-        marvelRemoteDataSource: MarvelRemoteDataSource
-    ): MarvelRepository = MarvelRepositoryImpl(marvelRemoteDataSource)
 }
