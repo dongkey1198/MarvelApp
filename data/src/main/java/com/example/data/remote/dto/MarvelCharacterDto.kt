@@ -1,6 +1,7 @@
 package com.example.data.remote.dto
 
 import com.example.domain.model.MarvelCharacter
+import com.example.domain.model.MarvelDataSet
 import com.google.gson.annotations.SerializedName
 
 data class MarvelCharacterDto(
@@ -43,4 +44,11 @@ data class MarvelCharacterDto(
         @SerializedName("path") val path: String,
         @SerializedName("extension") val extension: String
     )
+
+    fun toMarvelDataSet(): MarvelDataSet =
+        MarvelDataSet(
+            total = data.total,
+            characters = data.results.map { it.toDomain() }
+        )
+
 }
