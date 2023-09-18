@@ -1,6 +1,8 @@
 package com.example.data.local.database
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.data.local.dao.FavoriteCharacterDao
 import com.example.data.local.dto.FavoriteCharacterDto
 
@@ -11,7 +13,8 @@ import com.example.data.local.dto.FavoriteCharacterDto
     version = 1,
     exportSchema = false
 )
-internal abstract class UseDatabase {
+@TypeConverters(RoomTypeConverter::class)
+abstract class UserDatabase: RoomDatabase() {
 
     internal abstract fun getFavoriteCharacterDao(): FavoriteCharacterDao
 
