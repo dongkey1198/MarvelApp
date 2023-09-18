@@ -65,6 +65,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.5.2")
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
