@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.marvelapp.databinding.FragmentFavoriteBinding
-import com.example.marvelapp.view.favorite.adapter.FavoriteCharacterListAdapter
+import com.example.marvelapp.model.MarvelCharacterItem
+import com.example.marvelapp.view.adapter.CharacterListAdapter
 
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
-    private val favoriteCharacterListAdapter by lazy { FavoriteCharacterListAdapter() }
+    private val characterListAdapter by lazy { CharacterListAdapter(itemClickedCallback) }
+    private val itemClickedCallback: (MarvelCharacterItem) -> Unit = {
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +34,7 @@ class FavoriteFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recyclerViewMarvelFavoriteCharacter.apply {
-            adapter = favoriteCharacterListAdapter
+            adapter = characterListAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
             itemAnimator = null
         }
