@@ -9,6 +9,7 @@ import com.example.domain.usecase.SaveMarvelCharacterUseCase
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import com.example.marvelapp.extension.FlowExtensions.throttleFirst
 import com.example.marvelapp.model.MarvelCharacterItem
+import com.example.marvelapp.model.toDomain
 import com.example.marvelapp.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

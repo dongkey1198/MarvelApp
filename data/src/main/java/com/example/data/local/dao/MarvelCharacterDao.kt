@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MarvelCharacterDao {
-
     @Insert(onConflict = OnConflictStrategy.NONE)
     suspend fun saveMarvelCharacter(marvelCharacterDto: MarvelCharacterLocalDto)
 

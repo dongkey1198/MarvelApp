@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import java.util.Date
 
 class RoomTypeConverter {
+
     @TypeConverter
     fun fromTimeStamp(timeStamp: Long): Date {
         return Date(timeStamp)

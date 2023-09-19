@@ -7,9 +7,7 @@ import com.example.data.local.dao.MarvelCharacterDao
 import com.example.data.local.dto.MarvelCharacterLocalDto
 
 @Database(
-    entities = [
-        MarvelCharacterLocalDto::class,
-    ],
+    entities = [MarvelCharacterLocalDto::class],
     version = 1,
     exportSchema = false
 )
