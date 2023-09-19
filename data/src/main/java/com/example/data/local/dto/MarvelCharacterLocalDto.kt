@@ -6,7 +6,7 @@ import com.example.domain.model.MarvelCharacter
 import java.util.Date
 
 @Entity(tableName = "MarvelCharacter")
-data class MarvelCharacterDto(
+data class MarvelCharacterLocalDto(
     @PrimaryKey
     val id: Int,
     val name: String,
@@ -15,7 +15,7 @@ data class MarvelCharacterDto(
     val savedDate: Date
 )
 
-fun MarvelCharacterDto.toDomain(): MarvelCharacter =
+fun MarvelCharacterLocalDto.toDomain(): MarvelCharacter =
     MarvelCharacter(
         id = id,
         name = name,
@@ -24,8 +24,8 @@ fun MarvelCharacterDto.toDomain(): MarvelCharacter =
         isFavorite = true
     )
 
-fun MarvelCharacter.toDto(): MarvelCharacterDto =
-    MarvelCharacterDto(
+fun MarvelCharacter.toDto(): MarvelCharacterLocalDto =
+    MarvelCharacterLocalDto(
         id = id,
         name = name,
         description = description,
