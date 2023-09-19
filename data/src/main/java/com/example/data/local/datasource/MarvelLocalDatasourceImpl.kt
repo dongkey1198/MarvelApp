@@ -27,11 +27,12 @@ class MarvelLocalDatasourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharacterCount(): Int = withContext(Dispatchers.IO) {
-        favoriteCharacterDao.getCharacterCount()
+    override suspend fun getMarvelAllCharacters(): List<MarvelCharacter> = withContext(Dispatchers.IO) {
+        favoriteCharacterDao.getMarvelAllCharacters()
+            .map { it.toDomain() }
     }
 
-    override fun getMarvelCharacters(): Flow<List<MarvelCharacter>> =
-        favoriteCharacterDao.getMarvelCharacters()
+    override fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacter>> =
+        favoriteCharacterDao.getMarvelAllCharactersFlow()
             .map { it.map { result -> result.toDomain() } }
 }

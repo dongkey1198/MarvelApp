@@ -22,7 +22,7 @@ class SearchMarvelCharactersUseCase @Inject constructor(
         runCatching {
             combine(
                 flowOf(marvelRepository.fetchCharacters(query, offset)),
-                marvelRepository.getMarvelCharacters()
+                marvelRepository.getMarvelAllCharactersFlow()
             ) { characters, favorites ->
                 updatePreviousQuery(query)
                 updateMarvelCharacterCache(query, characters, favorites)
