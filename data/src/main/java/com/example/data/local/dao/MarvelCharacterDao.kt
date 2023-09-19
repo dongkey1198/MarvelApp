@@ -19,6 +19,6 @@ interface MarvelCharacterDao {
     @Query("SELECT COUNT(*) FROM MarvelCharacter")
     suspend fun getCharacterCount(): Int
 
-    @Query("SELECT * FROM MarvelCharacter")
+    @Query("SELECT * FROM MarvelCharacter ORDER BY savedDate ASC")
     fun getMarvelCharacters(): Flow<List<MarvelCharacterLocalDto>>
 }
