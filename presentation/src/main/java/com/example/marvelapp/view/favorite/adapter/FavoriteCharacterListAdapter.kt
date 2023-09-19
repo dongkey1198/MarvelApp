@@ -1,8 +1,7 @@
-package com.example.marvelapp.view.search.adapter
+package com.example.marvelapp.view.favorite.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,14 +10,12 @@ import com.example.marvelapp.R
 import com.example.marvelapp.databinding.ItemViewholderCharacterBinding
 import com.example.marvelapp.model.MarvelCharacterItem
 
-class CharacterListAdapter(
-    private val itemClickedCallback: (MarvelCharacterItem) -> Unit
-) : ListAdapter<MarvelCharacterItem, CharacterListAdapter.ViewHolder>(diffUtil) {
+class FavoriteCharacterListAdapter : ListAdapter<MarvelCharacterItem, FavoriteCharacterListAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ViewHolder = ViewHolder(
+    ): FavoriteCharacterListAdapter.ViewHolder = ViewHolder(
         ItemViewholderCharacterBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -27,9 +24,9 @@ class CharacterListAdapter(
     )
 
     override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int)
-    {
+        holder: FavoriteCharacterListAdapter.ViewHolder,
+        position: Int
+    ) {
         holder.bind(getItem(position))
     }
 
@@ -37,17 +34,10 @@ class CharacterListAdapter(
         private val binding: ItemViewholderCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.root.setOnClickListener {
-                itemClickedCallback(getItem(layoutPosition))
-            }
-        }
-
         fun bind(item: MarvelCharacterItem) {
             initImage(item.thumbnail)
             initName(item.name)
             initDescription(item.description)
-            initBackgroundState(item.isFavorite)
         }
 
         private fun initImage(thumbnail: String) {
@@ -64,13 +54,6 @@ class CharacterListAdapter(
 
         private fun initDescription(description: String) {
             binding.textViewCharacterDescription.text = description
-        }
-
-        private fun initBackgroundState(isFavorite: Boolean) {
-            val backgroundColor = if (isFavorite) R.color.gray else R.color.white
-            binding.root.apply {
-                setBackgroundColor(ContextCompat.getColor(context, backgroundColor))
-            }
         }
     }
 
