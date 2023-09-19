@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:clickable="true"
+    android:focusable="true"
     android:maxWidth="100dp"
     android:padding="5dp"
     app:cardCornerRadius="15dp"
@@ -35,7 +37,8 @@
             android:layout_marginTop="8dp"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="13sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageViewCharacterImage"
@@ -48,9 +51,11 @@
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="3"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewCharacterName"
+            tools:ignore="SmallSp"
             tools:text="Description." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
