@@ -16,24 +16,25 @@ class SaveMarvelCharacterUseCase @Inject constructor(
     ): Flow<RequestResult<String>> = flow {
         runCatching {
             emit(RequestResult.Loading(true))
-            val count = marvelRepository.getCharacterCount()
-            val message = if (count >= STORAGE_LIMIT) {
-                STORAGE_IS_FULL_MESSAGE
-            } else {
-                marvelRepository.saveMarvelCharacter(marvelCharacter)
-                SUCCESS_MESSAGE
-            }
+            deleteOldestItemIfRequire()
+            marvelRepository.saveMarvelCharacter(marvelCharacter)
             emit(RequestResult.Loading(false))
-            emit(RequestResult.Success(message))
+            emit(RequestResult.Success(SUCCESS_MESSAGE))
         }.onFailure {
             emit(RequestResult.Loading(false))
             emit(RequestResult.Error(message = "${it.message}"))
         }
     }
 
+    private suspend fun deleteOldestItemIfRequire() {
+        val favoriteCharacters = marvelRepository.getMarvelAllCharacters()
+        if (favoriteCharacters.size >= 5) {
+            val oldestItem = favoriteCharacters.first()
+            marvelRepository.deleteMarvelCharacter(oldestItem.id)
+        }
+    }
+
     companion object {
         private const val SUCCESS_MESSAGE = "성공적으로 저장 완료했습니다."
-        private const val STORAGE_IS_FULL_MESSAGE = "좋아요 캐릭터는 최대 5개까지 저장 가능합니다."
-        private const val STORAGE_LIMIT = 5
     }
 }
