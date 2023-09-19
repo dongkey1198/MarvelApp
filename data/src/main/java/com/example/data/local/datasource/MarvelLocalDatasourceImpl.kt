@@ -21,13 +21,17 @@ class MarvelLocalDatasourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteMarvelCharacter(id: Int) {
+        withContext(Dispatchers.IO) {
+            favoriteCharacterDao.deleteMarvelCharacter(id)
+        }
+    }
+
     override suspend fun getCharacterCount(): Int = withContext(Dispatchers.IO) {
         favoriteCharacterDao.getCharacterCount()
     }
 
     override fun getMarvelCharacters(): Flow<List<MarvelCharacter>> =
         favoriteCharacterDao.getMarvelCharacters()
-            .map {
-                it.map { result -> result.toDomain() }
-            }
+            .map { it.map { result -> result.toDomain() } }
 }
