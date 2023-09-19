@@ -10,6 +10,7 @@ import com.example.marvelapp.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +21,10 @@ class FavoriteViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _favoriteMarvelCharacterFlow = MutableStateFlow<List<MarvelCharacterItem>>(emptyList())
-    val favoriteMarvelCharacterFlow get() = _favoriteMarvelCharacterFlow
+    val favoriteMarvelCharacterFlow get() = _favoriteMarvelCharacterFlow.asStateFlow()
+
+    private val _progressStateFlow = MutableStateFlow<Boolean>(false)
+    val progressStateFlow get() =  _progressStateFlow.asStateFlow()
 
 
     init {
@@ -32,7 +36,7 @@ class FavoriteViewModel @Inject constructor(
             getFavoriteCharactersUseCase().collect { requestResult ->
                 when (requestResult) {
                     is RequestResult.Success -> updateFavoriteMarvelCharacterState(requestResult.data)
-                    is RequestResult.Loading -> Unit
+                    is RequestResult.Loading -> updateProgressState(requestResult.isProgressing)
                     is RequestResult.Error -> Unit
                 }
             }
@@ -45,5 +49,9 @@ class FavoriteViewModel @Inject constructor(
         } else {
             _favoriteMarvelCharacterFlow.update { favoriteCharacters.map { it.toPresentation() } }
         }
+    }
+
+    private fun updateProgressState(isProgressing: Boolean) {
+        _progressStateFlow.update { isProgressing }
     }
 }

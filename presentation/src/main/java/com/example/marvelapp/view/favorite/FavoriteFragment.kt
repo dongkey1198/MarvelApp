@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.marvelapp.databinding.FragmentFavoriteBinding
+import com.example.marvelapp.extension.ViewExtensions.setVisibility
 import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.view.adapter.CharacterListAdapter
 import com.example.marvelapp.viewmodel.favorite.FavoriteViewModel
@@ -40,6 +41,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        initProgressBar()
     }
 
     private fun initRecyclerView() {
@@ -52,6 +54,16 @@ class FavoriteFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favoriteMarvelCharacterFlow.collect { favoriteCharacters ->
                     characterListAdapter.submitList(favoriteCharacters)
+                }
+            }
+        }
+    }
+
+    private fun initProgressBar() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.progressStateFlow.collect { isProgressing ->
+                    binding.progressBarFavorite.setVisibility(isProgressing)
                 }
             }
         }
