@@ -17,13 +17,12 @@ class SaveMarvelCharacterUseCase @Inject constructor(
         runCatching {
             emit(RequestResult.Loading(true))
             val count = marvelRepository.getCharacterCount()
-            if (count >= STORAGE_LIMIT) {
+            val message = if (count >= STORAGE_LIMIT) {
                 STORAGE_IS_FULL_MESSAGE
             } else {
                 marvelRepository.saveMarvelCharacter(marvelCharacter)
                 SUCCESS_MESSAGE
             }
-        }.onSuccess { message ->
             emit(RequestResult.Loading(false))
             emit(RequestResult.Success(message))
         }.onFailure {

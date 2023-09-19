@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.MarvelCharacter
 import com.example.domain.model.RequestResult
+import com.example.domain.usecase.DeleteMarvelCharacterUseCase
 import com.example.domain.usecase.SaveMarvelCharacterUseCase
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import com.example.marvelapp.extension.FlowExtensions.throttleFirst
@@ -27,7 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchMarvelCharactersUseCase: SearchMarvelCharactersUseCase,
-    private val saveMarvelCharacterUseCase: SaveMarvelCharacterUseCase
+    private val saveMarvelCharacterUseCase: SaveMarvelCharacterUseCase,
+    private val deleteMarvelCharacterUseCase: DeleteMarvelCharacterUseCase
 ) : ViewModel() {
 
     private val _searchQueryFlow = MutableSharedFlow<String>(replay = 0)
@@ -84,7 +86,11 @@ class SearchViewModel @Inject constructor(
         _clickedCharacterFlow
             .throttleFirst()
             .flatMapLatest { marvelCharacterItem ->
-                saveMarvelCharacterUseCase(marvelCharacterItem.toDomain())
+                if (marvelCharacterItem.isFavorite) {
+                    deleteMarvelCharacterUseCase(marvelCharacterItem.id)
+                } else {
+                    saveMarvelCharacterUseCase(marvelCharacterItem.toDomain())
+                }
             }.onEach { requestResult ->
                when (requestResult) {
                    is RequestResult.Success -> updateResultMassageState(requestResult.data)
