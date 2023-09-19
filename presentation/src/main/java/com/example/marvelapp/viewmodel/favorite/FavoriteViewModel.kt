@@ -9,7 +9,9 @@ import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,6 +28,9 @@ class FavoriteViewModel @Inject constructor(
     private val _progressStateFlow = MutableStateFlow<Boolean>(false)
     val progressStateFlow get() =  _progressStateFlow.asStateFlow()
 
+    private val _resultMessageFlow = MutableSharedFlow<String>()
+    val resultMessageFlow get() = _resultMessageFlow.asSharedFlow()
+
 
     init {
         observeFavoriteCharacters()
@@ -37,7 +42,7 @@ class FavoriteViewModel @Inject constructor(
                 when (requestResult) {
                     is RequestResult.Success -> updateFavoriteMarvelCharacterState(requestResult.data)
                     is RequestResult.Loading -> updateProgressState(requestResult.isProgressing)
-                    is RequestResult.Error -> Unit
+                    is RequestResult.Error -> updateResultMassageState(requestResult.message)
                 }
             }
         }
@@ -48,6 +53,12 @@ class FavoriteViewModel @Inject constructor(
             _favoriteMarvelCharacterFlow.update { emptyList() }
         } else {
             _favoriteMarvelCharacterFlow.update { favoriteCharacters.map { it.toPresentation() } }
+        }
+    }
+
+    private fun updateResultMassageState(message: String?) {
+        viewModelScope.launch(Dispatchers.Default) {
+            message?.let { _resultMessageFlow.emit(it) }
         }
     }
 

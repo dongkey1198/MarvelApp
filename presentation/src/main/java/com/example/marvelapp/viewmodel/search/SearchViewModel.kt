@@ -113,7 +113,7 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun updateResultMassageState(message: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             message?.let { _resultMessageFlow.emit(it) }
         }
     }
