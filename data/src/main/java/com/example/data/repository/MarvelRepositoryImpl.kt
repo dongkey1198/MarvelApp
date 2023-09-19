@@ -27,8 +27,8 @@ class MarvelRepositoryImpl @Inject constructor(
         favoriteLocalDataSource.deleteMarvelCharacter(id)
     }
 
-    override suspend fun getCharacterCount(): Int {
-        return favoriteLocalDataSource.getCharacterCount()
+    override suspend fun getMarvelAllCharacters(): List<MarvelCharacter> {
+        return favoriteLocalDataSource.getMarvelAllCharacters()
     }
 
     override fun getMarvelCharacters(): Flow<List<MarvelCharacter>> {

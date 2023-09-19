@@ -7,6 +7,6 @@ interface MarvelRepository {
     suspend fun fetchCharacters(nameStartsWith: String, offset: Int): List<MarvelCharacter>
     suspend fun saveMarvelCharacter(marvelCharacter: MarvelCharacter)
     suspend fun deleteMarvelCharacter(id: Int)
-    suspend fun getCharacterCount(): Int
+    suspend fun getMarvelAllCharacters(): List<MarvelCharacter>
     fun getMarvelCharacters(): Flow<List<MarvelCharacter>>
 }

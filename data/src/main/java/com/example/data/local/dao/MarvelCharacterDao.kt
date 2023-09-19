@@ -16,8 +16,8 @@ interface MarvelCharacterDao {
     @Query("DELETE FROM MarvelCharacter WHERE id = :id ")
     suspend fun deleteMarvelCharacter(id: Int)
 
-    @Query("SELECT COUNT(*) FROM MarvelCharacter")
-    suspend fun getCharacterCount(): Int
+    @Query("SELECT * FROM MarvelCharacter ORDER BY savedDate ASC")
+    suspend fun getMarvelAllCharacters(): List<MarvelCharacterLocalDto>
 
     @Query("SELECT * FROM MarvelCharacter ORDER BY savedDate ASC")
     fun getMarvelCharacters(): Flow<List<MarvelCharacterLocalDto>>

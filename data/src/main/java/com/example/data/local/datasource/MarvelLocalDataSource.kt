@@ -6,6 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface MarvelLocalDataSource {
     suspend fun saveMarvelCharacter(marvelCharacter: MarvelCharacter)
     suspend fun deleteMarvelCharacter(id: Int)
-    suspend fun getCharacterCount(): Int
+    suspend fun getMarvelAllCharacters(): List<MarvelCharacter>
     fun getMarvelCharacters(): Flow<List<MarvelCharacter>>
 }
