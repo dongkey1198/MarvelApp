@@ -57,6 +57,7 @@ class FavoriteFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favoriteMarvelCharacterFlow.collect { favoriteCharacters ->
                     characterListAdapter.submitList(favoriteCharacters)
+                    binding.recyclerViewMarvelFavoriteCharacter.setVisibility(favoriteCharacters.isNotEmpty())
                 }
             }
         }
