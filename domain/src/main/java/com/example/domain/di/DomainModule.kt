@@ -2,6 +2,7 @@ package com.example.domain.di
 
 import com.example.domain.repository.MarvelRepository
 import com.example.domain.usecase.DeleteMarvelCharacterUseCase
+import com.example.domain.usecase.GetFavoriteCharactersUseCase
 import com.example.domain.usecase.SaveMarvelCharacterUseCase
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import dagger.Module
@@ -31,4 +32,10 @@ object DomainModule {
     fun provideDeleteCharacterUseCase(
         marvelRepository: MarvelRepository
     ): DeleteMarvelCharacterUseCase = DeleteMarvelCharacterUseCase(marvelRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetFavoriteCharactersUseCase(
+        marvelRepository: MarvelRepository
+    ): GetFavoriteCharactersUseCase = GetFavoriteCharactersUseCase(marvelRepository)
 }
