@@ -15,13 +15,15 @@ class MarvelRepositoryImpl @Inject constructor(
     override suspend fun fetchCharacters(
         nameStartsWith: String,
         offset: Int
-    ): Pair<List<MarvelCharacter>, Int> = marvelRemoteDataSource.fetchCharacters(nameStartsWith, offset)
+    ): List<MarvelCharacter> = marvelRemoteDataSource.fetchCharacters(nameStartsWith, offset)
 
     override suspend fun saveMarvelCharacter(
         marvelCharacter: MarvelCharacter
     ) {
         favoriteLocalDataSource.saveMarvelCharacter(marvelCharacter)
     }
+
+    override suspend fun getCharacterCount(): Int = favoriteLocalDataSource.getCharacterCount()
 
     override fun getMarvelCharacters(): Flow<List<MarvelCharacter>> = favoriteLocalDataSource.getMarvelCharacters()
 }

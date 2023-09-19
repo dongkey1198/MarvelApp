@@ -1,6 +1,7 @@
 package com.example.domain.di
 
 import com.example.domain.repository.MarvelRepository
+import com.example.domain.usecase.SaveMarvelCharacterUseCase
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
 import dagger.Module
 import dagger.Provides
@@ -17,4 +18,10 @@ object DomainModule {
     fun provideSearchCharacterUseCase(
         marvelRepository: MarvelRepository
     ): SearchMarvelCharactersUseCase = SearchMarvelCharactersUseCase(marvelRepository)
+
+    @Provides
+    @Singleton
+    fun provideSaveCharacterUseCase(
+        marvelRepository: MarvelRepository
+    ): SaveMarvelCharacterUseCase = SaveMarvelCharacterUseCase(marvelRepository)
 }

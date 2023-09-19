@@ -1,8 +1,8 @@
-package com.example.marvelapp.utils
+package com.example.marvelapp.extension
 
 import android.view.View
 
-object Utils {
+object ViewExtensions {
 
     fun View.setVisibility(isShow: Boolean) {
         when (isShow) {

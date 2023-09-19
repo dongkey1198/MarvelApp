@@ -1,7 +1,7 @@
 package com.example.data.remote.service
 
 import com.example.data.constants.ApiConstants
-import com.example.data.remote.dto.MarvelCharacterDto
+import com.example.data.remote.dto.MarvelCharacterRemoteDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,5 +15,5 @@ interface MarvelApiService {
         @Query("limit") limit: Int = ApiConstants.limit,
         @Query("nameStartsWith") nameStartsWith: String,
         @Query("offset") offset: Int
-    ): MarvelCharacterDto
+    ): MarvelCharacterRemoteDto
 }

@@ -2,6 +2,7 @@ package com.example.marvelapp.view.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,9 @@ import com.example.marvelapp.R
 import com.example.marvelapp.databinding.ItemViewholderCharacterBinding
 import com.example.marvelapp.model.MarvelCharacterItem
 
-class CharacterListAdapter : ListAdapter<MarvelCharacterItem, CharacterListAdapter.ViewHolder>(diffUtil) {
+class CharacterListAdapter(
+    private val itemClickedCallback: (MarvelCharacterItem) -> Unit
+) : ListAdapter<MarvelCharacterItem, CharacterListAdapter.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         ItemViewholderCharacterBinding.inflate(
@@ -28,10 +31,17 @@ class CharacterListAdapter : ListAdapter<MarvelCharacterItem, CharacterListAdapt
         private val binding: ItemViewholderCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.root.setOnClickListener {
+                itemClickedCallback(getItem(layoutPosition))
+            }
+        }
+
         fun bind(item: MarvelCharacterItem) {
             initImage(item.thumbnail)
             initName(item.name)
             initDescription(item.description)
+            initBackgroundState(item.isFavorite)
         }
 
         private fun initImage(thumbnail: String) {
@@ -48,6 +58,13 @@ class CharacterListAdapter : ListAdapter<MarvelCharacterItem, CharacterListAdapt
 
         private fun initDescription(description: String) {
             binding.textViewCharacterDescription.text = description
+        }
+
+        private fun initBackgroundState(isFavorite: Boolean) {
+            val backgroundColor = if (isFavorite) R.color.gray else R.color.white
+            binding.root.apply {
+                setBackgroundColor(ContextCompat.getColor(context, backgroundColor))
+            }
         }
     }
 

@@ -4,10 +4,8 @@ import com.example.domain.model.MarvelCharacter
 import kotlinx.coroutines.flow.Flow
 
 interface MarvelRepository {
-
-    suspend fun fetchCharacters(nameStartsWith: String, offset: Int): Pair<List<MarvelCharacter>, Int>
-
+    suspend fun fetchCharacters(nameStartsWith: String, offset: Int): List<MarvelCharacter>
     suspend fun saveMarvelCharacter(marvelCharacter: MarvelCharacter)
-
+    suspend fun getCharacterCount(): Int
     fun getMarvelCharacters(): Flow<List<MarvelCharacter>>
 }
