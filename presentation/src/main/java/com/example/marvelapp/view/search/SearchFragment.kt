@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.databinding.FragmentSearchBinding
@@ -72,24 +74,30 @@ class SearchFragment : Fragment() {
             })
         }
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.marvelCharacterItemsFlow.collect { items ->
-                characterListAdapter.submitList(items)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.marvelCharacterItemsFlow.collect { items ->
+                    characterListAdapter.submitList(items)
+                }
             }
         }
     }
 
     private fun initProgress() {
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.progressStateFlow.collect { isProgressing ->
-                binding.progressBarSearch.setVisibility(isProgressing)
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.progressStateFlow.collect { isProgressing ->
+                    binding.progressBarSearch.setVisibility(isProgressing)
+                }
             }
         }
     }
 
     private fun initSnackBar() {
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.resultMessageFlow.collect { message ->
-                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.resultMessageFlow.collect { message ->
+                    Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+                }
             }
         }
     }
