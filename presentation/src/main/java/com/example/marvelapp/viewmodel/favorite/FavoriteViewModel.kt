@@ -31,6 +31,8 @@ class FavoriteViewModel @Inject constructor(
     private val _resultMessageFlow = MutableSharedFlow<String>()
     val resultMessageFlow get() = _resultMessageFlow.asSharedFlow()
 
+    private val _emptyMessageStateFlow = MutableStateFlow<Boolean>(false)
+    val emptyMessageStateFlow get() = _emptyMessageStateFlow.asStateFlow()
 
     init {
         observeFavoriteCharacters()
@@ -51,9 +53,15 @@ class FavoriteViewModel @Inject constructor(
     private fun updateFavoriteMarvelCharacterState(favoriteCharacters: List<MarvelCharacter>?) {
         if (favoriteCharacters.isNullOrEmpty()) {
             _favoriteMarvelCharacterFlow.update { emptyList() }
+            updateEmptyMessageState(true)
         } else {
             _favoriteMarvelCharacterFlow.update { favoriteCharacters.map { it.toPresentation() } }
+            updateEmptyMessageState(false)
         }
+    }
+
+    private fun updateEmptyMessageState(isShow: Boolean) {
+        _emptyMessageStateFlow.update { isShow }
     }
 
     private fun updateResultMassageState(message: String?) {

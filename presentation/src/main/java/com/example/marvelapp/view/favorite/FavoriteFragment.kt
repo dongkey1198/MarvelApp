@@ -42,6 +42,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        initEmptyMessage()
         initProgressBar()
         initSnackBar()
     }
@@ -60,6 +61,17 @@ class FavoriteFragment : Fragment() {
             }
         }
     }
+
+    private fun initEmptyMessage() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.emptyMessageStateFlow.collect { isShow ->
+                    binding.textViewEmptyMessage.setVisibility(isShow)
+                }
+            }
+        }
+    }
+
 
     private fun initProgressBar() {
         lifecycleScope.launch(Dispatchers.Main) {
