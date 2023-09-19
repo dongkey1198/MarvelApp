@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.search.adapter
+package com.example.marvelapp.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
