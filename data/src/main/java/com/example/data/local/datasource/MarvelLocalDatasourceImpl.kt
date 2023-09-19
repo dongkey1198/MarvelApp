@@ -13,6 +13,7 @@ import javax.inject.Inject
 class MarvelLocalDatasourceImpl @Inject constructor(
     private val favoriteCharacterDao: MarvelCharacterDao
 ) : MarvelLocalDataSource {
+
     override suspend fun saveMarvelCharacter(
         marvelCharacter: MarvelCharacter
     ) {
