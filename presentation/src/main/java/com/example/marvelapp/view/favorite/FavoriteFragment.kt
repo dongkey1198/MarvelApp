@@ -15,6 +15,7 @@ import com.example.marvelapp.extension.ViewExtensions.setVisibility
 import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.view.adapter.CharacterListAdapter
 import com.example.marvelapp.viewmodel.favorite.FavoriteViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class FavoriteFragment : Fragment() {
     private val viewModel: FavoriteViewModel by viewModels()
     private val characterListAdapter by lazy { CharacterListAdapter(itemClickedCallback) }
     private val itemClickedCallback: (MarvelCharacterItem) -> Unit = {
-
+        // TODO: Add delete feature
     }
 
     override fun onCreateView(
@@ -42,6 +43,7 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initProgressBar()
+        initSnackBar()
     }
 
     private fun initRecyclerView() {
@@ -64,6 +66,16 @@ class FavoriteFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.progressStateFlow.collect { isProgressing ->
                     binding.progressBarFavorite.setVisibility(isProgressing)
+                }
+            }
+        }
+    }
+
+    private fun initSnackBar() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.resultMessageFlow.collect { message ->
+                    Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
                 }
             }
         }
