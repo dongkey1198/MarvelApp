@@ -27,8 +27,8 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: FavoriteViewModel by viewModels()
     private val characterListAdapter by lazy { CharacterListAdapter(itemClickedCallback) }
-    private val itemClickedCallback: (MarvelCharacterItem) -> Unit = {
-        // TODO: Add delete feature
+    private val itemClickedCallback: (MarvelCharacterItem) -> Unit = { marvelCharacterItem ->
+        viewModel.characterItemClicked(marvelCharacterItem)
     }
 
     override fun onCreateView(
