@@ -11,9 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.databinding.FragmentSearchBinding
-import com.example.marvelapp.utils.Utils.setVisibility
+import com.example.marvelapp.model.MarvelCharacterItem
+import com.example.marvelapp.extension.ViewExtensions.setVisibility
 import com.example.marvelapp.view.search.adapter.CharacterListAdapter
 import com.example.marvelapp.viewmodel.search.SearchViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,8 +25,11 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private val characterListAdapter by lazy { CharacterListAdapter() }
     private val viewModel: SearchViewModel by viewModels()
+    private val characterListAdapter by lazy { CharacterListAdapter(itemClickedCallback) }
+    private val itemClickedCallback: (MarvelCharacterItem) -> Unit = {
+        viewModel.characterItemClicked(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +44,7 @@ class SearchFragment : Fragment() {
         initEditText()
         initRecyclerView()
         initProgress()
+        initSnackBar()
     }
 
     private fun initEditText() {
@@ -46,7 +52,6 @@ class SearchFragment : Fragment() {
             val query = it?.toString() ?: ""
             viewModel.performSearch(query)
         }
-
     }
 
     private fun initRecyclerView() {
@@ -67,7 +72,7 @@ class SearchFragment : Fragment() {
             })
         }
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.marvelCharacterItems.collect { items ->
+            viewModel.marvelCharacterItemsFlow.collect { items ->
                 characterListAdapter.submitList(items)
             }
         }
@@ -80,6 +85,15 @@ class SearchFragment : Fragment() {
             }
         }
     }
+
+    private fun initSnackBar() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            viewModel.resultMessageFlow.collect { message ->
+                Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
