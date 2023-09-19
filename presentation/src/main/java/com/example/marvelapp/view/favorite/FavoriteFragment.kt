@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.marvelapp.databinding.FragmentFavoriteBinding
+import com.example.marvelapp.view.favorite.adapter.FavoriteCharacterListAdapter
 
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
+    private val favoriteCharacterListAdapter by lazy { FavoriteCharacterListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +21,19 @@ class FavoriteFragment : Fragment() {
     ): View {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        binding.recyclerViewMarvelFavoriteCharacter.apply {
+            adapter = favoriteCharacterListAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            itemAnimator = null
+        }
     }
 
     override fun onDestroyView() {
