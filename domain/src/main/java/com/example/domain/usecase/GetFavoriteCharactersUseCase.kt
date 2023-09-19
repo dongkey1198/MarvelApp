@@ -14,7 +14,7 @@ class GetFavoriteCharactersUseCase @Inject constructor(
     operator fun invoke(): Flow<RequestResult<List<MarvelCharacter>>> = flow {
         runCatching {
             emit(RequestResult.Loading(true))
-            marvelRepository.getMarvelCharacters()
+            marvelRepository.getMarvelAllCharactersFlow()
                 .collect { favoriteCharacters ->
                     emit(RequestResult.Loading(false))
                     emit(RequestResult.Success(favoriteCharacters))

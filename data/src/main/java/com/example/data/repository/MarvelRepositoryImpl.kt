@@ -31,7 +31,7 @@ class MarvelRepositoryImpl @Inject constructor(
         return favoriteLocalDataSource.getMarvelAllCharacters()
     }
 
-    override fun getMarvelCharacters(): Flow<List<MarvelCharacter>> {
-        return favoriteLocalDataSource.getMarvelCharacters()
+    override fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacter>> {
+        return favoriteLocalDataSource.getMarvelAllCharactersFlow()
     }
 }

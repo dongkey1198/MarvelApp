@@ -32,7 +32,7 @@ class MarvelLocalDatasourceImpl @Inject constructor(
             .map { it.toDomain() }
     }
 
-    override fun getMarvelCharacters(): Flow<List<MarvelCharacter>> =
-        favoriteCharacterDao.getMarvelCharacters()
+    override fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacter>> =
+        favoriteCharacterDao.getMarvelAllCharactersFlow()
             .map { it.map { result -> result.toDomain() } }
 }

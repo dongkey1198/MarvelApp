@@ -20,5 +20,5 @@ interface MarvelCharacterDao {
     suspend fun getMarvelAllCharacters(): List<MarvelCharacterLocalDto>
 
     @Query("SELECT * FROM MarvelCharacter ORDER BY savedDate ASC")
-    fun getMarvelCharacters(): Flow<List<MarvelCharacterLocalDto>>
+    fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacterLocalDto>>
 }

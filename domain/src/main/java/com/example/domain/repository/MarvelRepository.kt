@@ -8,5 +8,5 @@ interface MarvelRepository {
     suspend fun saveMarvelCharacter(marvelCharacter: MarvelCharacter)
     suspend fun deleteMarvelCharacter(id: Int)
     suspend fun getMarvelAllCharacters(): List<MarvelCharacter>
-    fun getMarvelCharacters(): Flow<List<MarvelCharacter>>
+    fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacter>>
 }
