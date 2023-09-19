@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelapp.databinding.FragmentSearchBinding
 import com.example.marvelapp.model.MarvelCharacterItem
 import com.example.marvelapp.extension.ViewExtensions.setVisibility
-import com.example.marvelapp.view.search.adapter.CharacterListAdapter
+import com.example.marvelapp.view.adapter.CharacterListAdapter
 import com.example.marvelapp.viewmodel.search.SearchViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

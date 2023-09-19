@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.search.adapter
+package com.example.marvelapp.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,7 +15,10 @@ class CharacterListAdapter(
     private val itemClickedCallback: (MarvelCharacterItem) -> Unit
 ) : ListAdapter<MarvelCharacterItem, CharacterListAdapter.ViewHolder>(diffUtil) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder = ViewHolder(
         ItemViewholderCharacterBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -23,7 +26,10 @@ class CharacterListAdapter(
         )
     )
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int)
+    {
         holder.bind(getItem(position))
     }
 
