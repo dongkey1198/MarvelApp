@@ -73,7 +73,6 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-
     private fun initProgressBar() {
         lifecycleScope.launch(Dispatchers.Main) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
