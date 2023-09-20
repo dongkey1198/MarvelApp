@@ -1,4 +1,4 @@
-package com.example.marvelapp.extension
+package com.example.presentation.extension
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

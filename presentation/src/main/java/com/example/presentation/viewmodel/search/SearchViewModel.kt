@@ -1,4 +1,4 @@
-package com.example.marvelapp.viewmodel.search
+package com.example.presentation.viewmodel.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,10 +7,10 @@ import com.example.domain.model.RequestResult
 import com.example.domain.usecase.DeleteMarvelCharacterUseCase
 import com.example.domain.usecase.SaveMarvelCharacterUseCase
 import com.example.domain.usecase.SearchMarvelCharactersUseCase
-import com.example.marvelapp.extension.FlowExtensions.throttleFirst
-import com.example.marvelapp.model.MarvelCharacterItem
-import com.example.marvelapp.model.toDomain
-import com.example.marvelapp.model.toPresentation
+import com.example.presentation.extension.FlowExtensions.throttleFirst
+import com.example.presentation.model.MarvelCharacterItem
+import com.example.presentation.model.toDomain
+import com.example.presentation.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

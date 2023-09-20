@@ -1,4 +1,4 @@
-package com.example.marvelapp.viewmodel.favorite
+package com.example.presentation.viewmodel.favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,9 +6,9 @@ import com.example.domain.model.MarvelCharacter
 import com.example.domain.model.RequestResult
 import com.example.domain.usecase.DeleteMarvelCharacterUseCase
 import com.example.domain.usecase.GetFavoriteCharactersUseCase
-import com.example.marvelapp.extension.FlowExtensions.throttleFirst
-import com.example.marvelapp.model.MarvelCharacterItem
-import com.example.marvelapp.model.toPresentation
+import com.example.presentation.extension.FlowExtensions.throttleFirst
+import com.example.presentation.model.MarvelCharacterItem
+import com.example.presentation.model.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

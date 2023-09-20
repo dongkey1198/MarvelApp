@@ -12,10 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.marvelapp.model.MarvelCharacterItem
-import com.example.marvelapp.extension.ViewExtensions.setVisibility
+import com.example.presentation.model.MarvelCharacterItem
+import com.example.presentation.extension.ViewExtensions.setVisibility
 import com.example.presentation.view.adapter.CharacterListAdapter
-import com.example.marvelapp.viewmodel.search.SearchViewModel
+import com.example.presentation.viewmodel.search.SearchViewModel
 import com.example.presentation.databinding.FragmentSearchBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

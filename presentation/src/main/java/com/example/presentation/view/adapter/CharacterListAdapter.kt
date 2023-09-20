@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.marvelapp.model.MarvelCharacterItem
+import com.example.presentation.model.MarvelCharacterItem
 import com.example.presentation.R
 import com.example.presentation.databinding.ItemViewholderCharacterBinding
 

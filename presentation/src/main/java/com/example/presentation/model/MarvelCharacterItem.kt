@@ -1,4 +1,4 @@
-package com.example.marvelapp.model
+package com.example.presentation.model
 
 import com.example.domain.model.MarvelCharacter
 import java.util.Date
