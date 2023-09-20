@@ -21,7 +21,8 @@ fun MarvelCharacterLocalDto.toDomain(): MarvelCharacter =
         name = name,
         description = description,
         thumbnail = thumbnail,
-        isFavorite = true
+        isFavorite = true,
+        saveDate = savedDate
     )
 
 fun MarvelCharacter.toDto(): MarvelCharacterLocalDto =
@@ -30,5 +31,5 @@ fun MarvelCharacter.toDto(): MarvelCharacterLocalDto =
         name = name,
         description = description,
         thumbnail = thumbnail,
-        savedDate = Date()
+        savedDate = saveDate ?: Date()
     )
