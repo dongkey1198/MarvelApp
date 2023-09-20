@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MarvelApp</string>
+    <string name="label_search">Search</string>
+    <string name="label_favorite">Favorite</string>
+    <string name="hint_search">마블 영웅 이름을 입력하시오.</string>
+    <string name="label_favorite_empty_message">저장된 마블 캐릭터가 없어요…!!</string>
+</resources>

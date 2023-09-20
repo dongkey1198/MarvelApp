@@ -1,11 +1,11 @@
-package com.example.marvelapp.view.adapter
+package com.example.presentation.view.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.marvelapp.view.favorite.FavoriteFragment
-import com.example.marvelapp.view.search.SearchFragment
+import com.example.presentation.view.favorite.FavoriteFragment
+import com.example.presentation.view.search.SearchFragment
 import java.lang.IllegalStateException
 
 class ViewPagerAdapter(

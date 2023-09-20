@@ -1,4 +1,4 @@
-package com.example.marvelapp.view.adapter
+package com.example.presentation.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.marvelapp.R
-import com.example.marvelapp.databinding.ItemViewholderCharacterBinding
 import com.example.marvelapp.model.MarvelCharacterItem
+import com.example.presentation.R
+import com.example.presentation.databinding.ItemViewholderCharacterBinding
 
 class CharacterListAdapter(
     private val itemClickedCallback: (MarvelCharacterItem) -> Unit

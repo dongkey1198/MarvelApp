@@ -1,10 +1,10 @@
-package com.example.marvelapp.view
+package com.example.presentation.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.marvelapp.R
-import com.example.marvelapp.databinding.ActivityMainBinding
-import com.example.marvelapp.view.adapter.ViewPagerAdapter
+import com.example.presentation.R
+import com.example.presentation.databinding.ActivityMainBinding
+import com.example.presentation.view.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
