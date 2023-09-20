@@ -28,12 +28,15 @@ class MarvelLocalDatasourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMarvelAllCharacters(): List<MarvelCharacter> = withContext(Dispatchers.IO) {
-        favoriteCharacterDao.getMarvelAllCharacters()
-            .map { it.toDomain() }
+    override suspend fun getMarvelAllCharacters(): List<MarvelCharacter> {
+        return withContext(Dispatchers.IO) {
+            favoriteCharacterDao.getMarvelAllCharacters()
+                .map { it.toDomain() }
+        }
     }
 
-    override fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacter>> =
-        favoriteCharacterDao.getMarvelAllCharactersFlow()
+    override fun getMarvelAllCharactersFlow(): Flow<List<MarvelCharacter>> {
+        return favoriteCharacterDao.getMarvelAllCharactersFlow()
             .map { it.map { result -> result.toDomain() } }
+    }
 }

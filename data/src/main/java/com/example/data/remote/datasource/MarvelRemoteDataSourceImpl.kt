@@ -14,8 +14,10 @@ class MarvelRemoteDataSourceImpl @Inject constructor(
     override suspend fun fetchCharacters(
         nameStartsWith: String,
         offset: Int
-    ): List<MarvelCharacter> = withContext(Dispatchers.IO) {
-        marvelApiService.fetchCharacters(nameStartsWith = nameStartsWith, offset = offset)
-            .data.results.map { it.toDomain() }
+    ): List<MarvelCharacter> {
+        return withContext(Dispatchers.IO) {
+            marvelApiService.fetchCharacters(nameStartsWith = nameStartsWith, offset = offset)
+                .data.results.map { it.toDomain() }
+        }
     }
 }
