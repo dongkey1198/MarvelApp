@@ -1,6 +1,7 @@
 package com.example.marvelapp.model
 
 import com.example.domain.model.MarvelCharacter
+import java.util.Date
 
 data class MarvelCharacterItem(
     val id: Int,
@@ -16,7 +17,8 @@ fun MarvelCharacterItem.toDomain(): MarvelCharacter =
         name = name,
         description = description,
         thumbnail = thumbnail,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
+        saveDate = Date()
     )
 
 fun MarvelCharacter.toPresentation() =
