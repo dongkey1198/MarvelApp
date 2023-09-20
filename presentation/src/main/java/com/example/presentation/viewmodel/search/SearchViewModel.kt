@@ -66,7 +66,6 @@ class SearchViewModel @Inject constructor(
         _searchQueryFlow
             .debounce(SEARCH_TIMEOUT)
             .flatMapLatest { query ->
-                updateProgressingState(true)
                 if (query.length >= 2) {
                     searchMarvelCharactersUseCase(query)
                 } else {

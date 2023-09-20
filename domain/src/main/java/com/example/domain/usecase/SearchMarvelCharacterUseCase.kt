@@ -18,6 +18,7 @@ class SearchMarvelCharactersUseCase @Inject constructor(
 
     operator fun invoke(query: String): Flow<RequestResult<List<MarvelCharacter>>> = flow {
         updateOffset(query)
+        emit(RequestResult.Loading(true))
         runCatching {
             combine(
                 marvelRepository.fetchCharacters(query, offset),
