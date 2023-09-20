@@ -33,8 +33,8 @@ class SearchViewModel @Inject constructor(
     private val deleteMarvelCharacterUseCase: DeleteMarvelCharacterUseCase
 ) : ViewModel() {
 
-    private val _searchQueryFlow = MutableSharedFlow<String>(replay = 0)
-    private val _clickedCharacterFlow = MutableSharedFlow<MarvelCharacterItem>(extraBufferCapacity = 1)
+    private val _searchQueryFlow = MutableSharedFlow<String>()
+    private val _clickedCharacterFlow = MutableSharedFlow<MarvelCharacterItem>()
 
     private val _marvelCharacterItemsFlow = MutableStateFlow<List<MarvelCharacterItem>>(emptyList())
     val marvelCharacterItemsFlow get() = _marvelCharacterItemsFlow.asStateFlow()
@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(
     private val _progressStateFlow = MutableStateFlow<Boolean>(false)
     val progressStateFlow get() = _progressStateFlow.asStateFlow()
 
-    private val _resultMessageFlow = MutableSharedFlow<String>(replay = 0)
+    private val _resultMessageFlow = MutableSharedFlow<String>()
     val resultMessageFlow get() = _resultMessageFlow.asSharedFlow()
 
     init {
