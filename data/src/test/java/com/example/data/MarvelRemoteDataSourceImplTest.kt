@@ -2,7 +2,6 @@ package com.example.data
 
 import com.example.data.remote.datasource.MarvelRemoteDataSourceImpl
 import com.example.data.remote.dto.MarvelCharacterRemoteDto
-import com.example.data.remote.dto.toDomain
 import com.example.data.remote.service.MarvelApiService
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -21,6 +20,8 @@ class MarvelRemoteDataSourceImplTest {
     private lateinit var mockMarvelApiService: MarvelApiService
     private lateinit var mockMarvelRemoteDataSourceImpl: MarvelRemoteDataSourceImpl
     private val fakeMarvelCharacterRemoteDto = MarvelCharacterRemoteDto(
+        code = 200,
+        status = "",
         MarvelCharacterRemoteDto.Data(
             listOf(
                 MarvelCharacterRemoteDto.Result(
@@ -47,13 +48,12 @@ class MarvelRemoteDataSourceImplTest {
 
     @Test
     fun `FetchCharacters Successfully Fetched MarvelCharacters`(): Unit = runBlocking {
-        val fakeMarvelCharacters = fakeMarvelCharacterRemoteDto.data.results.map { it.toDomain() }
         // given
         `when`(mockMarvelApiService.fetchCharacters(nameStartsWith = "", offset = 0))
             .thenReturn(fakeMarvelCharacterRemoteDto)
         // when
         val result = mockMarvelRemoteDataSourceImpl.fetchCharacters("", 0)
         // then
-        assertEquals(fakeMarvelCharacters, result)
+        assertEquals(fakeMarvelCharacterRemoteDto, result)
     }
 }
