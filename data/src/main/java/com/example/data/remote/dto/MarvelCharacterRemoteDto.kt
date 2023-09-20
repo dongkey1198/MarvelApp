@@ -4,7 +4,9 @@ import com.example.data.extension.UrlExtensions.convertHttpToHttps
 import com.example.domain.model.MarvelCharacter
 import com.google.gson.annotations.SerializedName
 
- data class MarvelCharacterRemoteDto(
+data class MarvelCharacterRemoteDto(
+    @SerializedName("code") val code: Int,
+    @SerializedName("status") val status: String,
     @SerializedName("data") val data: Data
 ) {
 
@@ -30,7 +32,7 @@ internal fun MarvelCharacterRemoteDto.Result.toDomain(): MarvelCharacter =
         id = id,
         name = name,
         description = description,
-        thumbnail = "${thumbnail.path}/portrait_xlarge.${thumbnail.extension}".convertHttpToHttps()
+        thumbnail = "${thumbnail.path}.${thumbnail.extension}".convertHttpToHttps()
     )
 
 

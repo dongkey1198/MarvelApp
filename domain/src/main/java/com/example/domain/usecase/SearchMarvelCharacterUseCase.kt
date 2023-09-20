@@ -6,7 +6,6 @@ import com.example.domain.repository.MarvelRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class SearchMarvelCharactersUseCase @Inject constructor(
@@ -17,11 +16,11 @@ class SearchMarvelCharactersUseCase @Inject constructor(
     private var previousQuery: String = ""
     private var offset = 0
 
-    suspend operator fun invoke(query: String): Flow<RequestResult<List<MarvelCharacter>>> = flow {
+    operator fun invoke(query: String): Flow<RequestResult<List<MarvelCharacter>>> = flow {
         updateOffset(query)
         runCatching {
             combine(
-                flowOf(marvelRepository.fetchCharacters(query, offset)),
+                marvelRepository.fetchCharacters(query, offset),
                 marvelRepository.getMarvelAllCharactersFlow()
             ) { characters, favorites ->
                 updatePreviousQuery(query)
