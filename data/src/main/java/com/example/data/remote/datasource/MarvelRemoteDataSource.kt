@@ -1,7 +1,7 @@
 package com.example.data.remote.datasource
 
-import com.example.domain.model.MarvelCharacter
+import com.example.data.remote.dto.MarvelCharacterRemoteDto
 
 interface MarvelRemoteDataSource {
-    suspend fun fetchCharacters(nameStartsWith: String, offset: Int): List<MarvelCharacter>
+    suspend fun fetchCharacters(nameStartsWith: String, offset: Int): MarvelCharacterRemoteDto
 }
